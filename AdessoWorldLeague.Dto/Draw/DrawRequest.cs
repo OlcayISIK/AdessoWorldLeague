@@ -8,9 +8,7 @@ public class DrawRequest
     [Range(4, 8)]
     public int GroupCount { get; set; }
 
-    [Required]
-    public string FirstName { get; set; } = null!;
+    public string FirstName { get; set; }
 
-    [Required]
-    public string LastName { get; set; } = null!;
+    public string LastName { get; set; }
 }

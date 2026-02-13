@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using AdessoWorldLeague.Business.Interfaces;
@@ -20,6 +21,10 @@ public class DrawController : ControllerBase
     [HttpPost("performDraw")]
     public async Task<IActionResult> PerformDraw([FromBody] DrawRequest request)
     {
+        request.FirstName = User.FindFirst(ClaimTypes.GivenName)?.Value ?? string.Empty;
+        request.LastName = User.FindFirst(ClaimTypes.Surname)?.Value ?? string.Empty;
+  
+
         var result = await _drawService.PerformDrawAsync(request);
         if (!result.IsSuccess)
             return BadRequest(new { message = result.ErrorMessage });

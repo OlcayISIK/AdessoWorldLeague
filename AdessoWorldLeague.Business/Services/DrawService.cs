@@ -23,6 +23,10 @@ public class DrawService : IDrawService
 
     public async Task<OperationResult<DrawResponse>> PerformDrawAsync(DrawRequest request)
     {
+
+        if (string.IsNullOrEmpty(request.FirstName) || string.IsNullOrEmpty(request.LastName))
+            return OperationResult<DrawResponse>.Failure("First Name or Last Name can not be null.");
+
         if (!TeamData.AllowedGroupCounts.Contains(request.GroupCount))
             return OperationResult<DrawResponse>.Failure("The number of groups should be 4 or 8.");
 
@@ -116,6 +120,7 @@ public class DrawService : IDrawService
     {
         return new DrawResponse
         {
+            Id = document.Id,
             DrawerFirstName = document.DrawerFirstName,
             DrawerLastName = document.DrawerLastName,
             GroupCount = document.GroupCount,

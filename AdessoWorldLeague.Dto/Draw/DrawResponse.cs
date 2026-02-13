@@ -2,6 +2,7 @@ namespace AdessoWorldLeague.Dto.Draw;
 
 public class DrawResponse
 {
+    public string Id { get; set; } = null!;
     public string DrawerFirstName { get; set; } = null!;
     public string DrawerLastName { get; set; } = null!;
     public int GroupCount { get; set; }
