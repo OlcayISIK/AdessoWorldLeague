@@ -22,7 +22,7 @@ public class DrawService : IDrawService
         _localizer = localizer;
     }
 
-    public async Task<OperationResult<DrawResponse>> PerformDrawAsync(DrawRequest request)
+    public async Task<OperationResult<DrawResponse>> PerformDrawAsync(DrawOperationRequest request)
     {
 
         if (string.IsNullOrEmpty(request.FirstName) || string.IsNullOrEmpty(request.LastName))
