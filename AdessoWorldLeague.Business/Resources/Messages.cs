@@ -1,3 +1,3 @@
-namespace AdessoWorldLeague.Business.Resources;
+namespace AdessoWorldLeague.Business;
 
 public class Messages;

@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Localization;
 using AdessoWorldLeague.Business.Interfaces;
-using AdessoWorldLeague.Business.Resources;
 using AdessoWorldLeague.Core.Constants;
 using AdessoWorldLeague.Core.Results;
 using AdessoWorldLeague.Data.Documents;
