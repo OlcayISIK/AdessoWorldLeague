@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="AdessoWorldLeague.Core/AdessoWorldLeague.Core.csproj" />
+  <Project Path="AdessoWorldLeague.Mongo/AdessoWorldLeague.Mongo.csproj" />
+  <Project Path="AdessoWorldLeague.Data/AdessoWorldLeague.Data.csproj" />
+  <Project Path="AdessoWorldLeague.Dto/AdessoWorldLeague.Dto.csproj" />
+  <Project Path="AdessoWorldLeague.Repository/AdessoWorldLeague.Repository.csproj" />
+  <Project Path="AdessoWorldLeague.Business/AdessoWorldLeague.Business.csproj" />
+  <Project Path="AdessoWorldLeague.WebApi/AdessoWorldLeague.WebApi.csproj" />
+</Solution>
