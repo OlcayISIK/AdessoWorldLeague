@@ -25,6 +25,7 @@ A .NET 10 Web API that simulates a football league group draw system. Randomly a
 - Docker & Docker Compose
 - Rate Limiting (fixed window)
 - Localization (EN / TR)
+- xUnit + Moq (unit testing)
 
 ## API Endpoints
 
@@ -99,6 +100,19 @@ curl -X POST http://localhost:5000/api/draw/performDraw \
   -d '{"groupCount": 4}'
 ```
 
+## Testing
+
+Unit tests use **xUnit** and **Moq**, located in `AdessoWorldLeague.Tests/`.
+
+```bash
+dotnet test AdessoWorldLeague.Tests
+```
+
+| Test Class | Covers | Tests |
+|------------|--------|-------|
+| `DrawServiceTests` | Draw validation, execution, retrieval, mapping | 12 |
+| `AuthServiceTests` | Registration, login, password hashing, JWT claims | 7 |
+
 ## Localization
 
 The API supports English (default) and Turkish. Set the `Accept-Language` header:
@@ -130,6 +144,7 @@ AdessoWorldLeague/
 ├── AdessoWorldLeague.Repository/     # Data access layer
 ├── AdessoWorldLeague.Business/       # Business logic & services
 ├── AdessoWorldLeague.WebApi/         # API entry point
+├── AdessoWorldLeague.Tests/          # Unit tests (xUnit + Moq)
 ├── Dockerfile
 ├── docker-compose.yml
 └── AdessoWorldLeague.slnx
