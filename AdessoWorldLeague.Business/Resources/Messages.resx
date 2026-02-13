@@ -63,4 +63,16 @@
   <data name="ServerError" xml:space="preserve">
     <value>A server error occurred.</value>
   </data>
+  <data name="LoginSuccessful" xml:space="preserve">
+    <value>Login successful.</value>
+  </data>
+  <data name="DrawCompleted" xml:space="preserve">
+    <value>Draw completed successfully.</value>
+  </data>
+  <data name="DrawRetrieved" xml:space="preserve">
+    <value>Draw retrieved successfully.</value>
+  </data>
+  <data name="DrawsRetrieved" xml:space="preserve">
+    <value>Draws retrieved successfully.</value>
+  </data>
 </root>

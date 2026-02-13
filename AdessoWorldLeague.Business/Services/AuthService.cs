@@ -43,7 +43,7 @@ public class AuthService : IAuthService
         };
 
         await _userRepository.CreateAsync(user);
-        return OperationResult.Success();
+        return OperationResult.Success(_localizer["RegistrationSuccessful"]);
     }
 
     public async Task<OperationResult<LoginResponse>> LoginAsync(LoginRequest request)
@@ -62,7 +62,7 @@ public class AuthService : IAuthService
         {
             Token = token,
             Expiration = expiration
-        });
+        }, _localizer["LoginSuccessful"]);
     }
 
     private string GenerateToken(UserDocument user)
