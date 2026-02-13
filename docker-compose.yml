@@ -3,16 +3,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: adessoworldleague-api
     ports:
       - "5000:8080"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
       - MongoSettings__ConnectionString=mongodb://mongo:27017
-      - MongoSettings__DatabaseName=AdessoWorldLeague
-      - JwtSettings__Secret=AdessoWorldLeague-Docker-Production-Secret-Key-2024!
-      - JwtSettings__Issuer=AdessoWorldLeague
-      - JwtSettings__Audience=AdessoWorldLeague
-      - JwtSettings__ExpirationMinutes=60
       - Seq__ServerUrl=http://seq:5341
     depends_on:
       mongo:
@@ -23,6 +18,7 @@ services:
 
   mongo:
     image: mongo:7
+    container_name: adessoworldleague-mongo
     ports:
       - "27017:27017"
     volumes:
@@ -31,10 +27,12 @@ services:
 
   seq:
     image: datalust/seq
+    container_name: adessoworldleague-seq
     ports:
       - "5341:5341"
       - "8081:80"
     environment:
+      - SEQ_FIRSTRUN_ADMINPASSWORD=Admin123!
       - ACCEPT_EULA=Y
     volumes:
       - seq-data:/data

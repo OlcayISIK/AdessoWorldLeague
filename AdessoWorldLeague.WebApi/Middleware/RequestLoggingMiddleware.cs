@@ -24,7 +24,7 @@ public class RequestLoggingMiddleware
         var sw = Stopwatch.StartNew();
 
         _logger.LogInformation(
-            "Request başladı. CorrelationId: {CorrelationId}, Method: {Method}, Path: {Path}",
+            "Request has been started. CorrelationId: {CorrelationId}, Method: {Method}, Path: {Path}",
             correlationId, context.Request.Method, context.Request.Path);
 
         await _next(context);
@@ -32,7 +32,7 @@ public class RequestLoggingMiddleware
         sw.Stop();
 
         _logger.LogInformation(
-            "Request tamamlandı. CorrelationId: {CorrelationId}, StatusCode: {StatusCode}, Duration: {Duration}ms",
+            "Request has been completed. CorrelationId: {CorrelationId}, StatusCode: {StatusCode}, Duration: {Duration}ms",
             correlationId, context.Response.StatusCode, sw.ElapsedMilliseconds);
     }
 }

@@ -22,7 +22,7 @@ public class ExceptionHandlingMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Beklenmeyen bir hata oluştu. TraceId: {TraceId}", context.TraceIdentifier);
+            _logger.LogError(ex, "An unexpected error occurred. TraceId: {TraceId}", context.TraceIdentifier);
             await HandleExceptionAsync(context);
         }
     }
@@ -35,7 +35,7 @@ public class ExceptionHandlingMiddleware
         var response = new
         {
             status = 500,
-            message = "Sunucu hatası oluştu.",
+            message = "A server error occurred.",
             traceId = context.TraceIdentifier
         };
 
