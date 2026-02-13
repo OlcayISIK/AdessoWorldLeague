@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using AdessoWorldLeague.Business.Interfaces;
+using AdessoWorldLeague.Business.Resources;
 using AdessoWorldLeague.Dto.Auth;
 
 namespace AdessoWorldLeague.WebApi.Controllers;
@@ -9,10 +11,12 @@ namespace AdessoWorldLeague.WebApi.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IStringLocalizer<Messages> _localizer;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, IStringLocalizer<Messages> localizer)
     {
         _authService = authService;
+        _localizer = localizer;
     }
 
     [HttpPost("register")]
@@ -22,7 +26,7 @@ public class AuthController : ControllerBase
         if (!result.IsSuccess)
             return BadRequest(new { message = result.ErrorMessage });
 
-        return Ok(new { message = "Registration successful." });
+        return Ok(new { message = _localizer["RegistrationSuccessful"].Value });
     }
 
     [HttpPost("login")]

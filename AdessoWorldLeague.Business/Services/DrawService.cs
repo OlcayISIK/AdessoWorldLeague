@@ -1,5 +1,7 @@
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using AdessoWorldLeague.Business.Interfaces;
+using AdessoWorldLeague.Business.Resources;
 using AdessoWorldLeague.Core.Constants;
 using AdessoWorldLeague.Core.Results;
 using AdessoWorldLeague.Data.Documents;
@@ -13,26 +15,28 @@ public class DrawService : IDrawService
     private readonly IDrawRepository _drawRepository;
     private readonly ITeamRepository _teamRepository;
     private readonly ILogger<DrawService> _logger;
+    private readonly IStringLocalizer<Messages> _localizer;
 
-    public DrawService(IDrawRepository drawRepository, ITeamRepository teamRepository, ILogger<DrawService> logger)
+    public DrawService(IDrawRepository drawRepository, ITeamRepository teamRepository, ILogger<DrawService> logger, IStringLocalizer<Messages> localizer)
     {
         _drawRepository = drawRepository;
         _teamRepository = teamRepository;
         _logger = logger;
+        _localizer = localizer;
     }
 
     public async Task<OperationResult<DrawResponse>> PerformDrawAsync(DrawRequest request)
     {
 
         if (string.IsNullOrEmpty(request.FirstName) || string.IsNullOrEmpty(request.LastName))
-            return OperationResult<DrawResponse>.Failure("First Name or Last Name can not be null.");
+            return OperationResult<DrawResponse>.Failure(_localizer["NameRequired"]);
 
         if (!TeamData.AllowedGroupCounts.Contains(request.GroupCount))
-            return OperationResult<DrawResponse>.Failure("The number of groups should be 4 or 8.");
+            return OperationResult<DrawResponse>.Failure(_localizer["InvalidGroupCount"]);
 
         var allTeams = await _teamRepository.GetAllAsync();
         if (allTeams.Count == 0)
-            return OperationResult<DrawResponse>.Failure("No team was found in the database.");
+            return OperationResult<DrawResponse>.Failure(_localizer["NoTeamsFound"]);
 
         var groups = ExecuteDraw(request.GroupCount, allTeams);
 
@@ -64,7 +68,7 @@ public class DrawService : IDrawService
     {
         var document = await _drawRepository.GetByIdAsync(id);
         if (document is null)
-            return OperationResult<DrawResponse>.Failure("The draw was not found.");
+            return OperationResult<DrawResponse>.Failure(_localizer["DrawNotFound"]);
 
         return OperationResult<DrawResponse>.Success(MapToResponse(document));
     }

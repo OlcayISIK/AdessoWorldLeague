@@ -1,6 +1,8 @@
+using System.Globalization;
 using System.Text;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
@@ -21,6 +23,8 @@ builder.Host.UseSerilog((context, config) =>
         .WriteTo.Console()
         .WriteTo.Seq(context.Configuration["Seq:ServerUrl"] ?? "http://localhost:5341");
 });
+
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -73,6 +77,14 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+var supportedCultures = new[] { new CultureInfo("en"), new CultureInfo("tr") };
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<RequestLoggingMiddleware>();
