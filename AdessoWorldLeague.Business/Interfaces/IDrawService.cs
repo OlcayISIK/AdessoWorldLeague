@@ -5,7 +5,7 @@ namespace AdessoWorldLeague.Business.Interfaces;
 
 public interface IDrawService
 {
-    Task<OperationResult<DrawResponse>> PerformDrawAsync(DrawRequest request);
+    Task<OperationResult<DrawResponse>> PerformDrawAsync(DrawOperationRequest request);
     Task<OperationResult<DrawResponse>> GetDrawByIdAsync(string id);
     Task<OperationResult<List<DrawResponse>>> GetAllDrawsAsync();
 }
