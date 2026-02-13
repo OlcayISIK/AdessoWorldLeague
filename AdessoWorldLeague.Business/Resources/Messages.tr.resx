@@ -63,4 +63,16 @@
   <data name="ServerError" xml:space="preserve">
     <value>Sunucu hatasi olustu.</value>
   </data>
+  <data name="LoginSuccessful" xml:space="preserve">
+    <value>Giris basarili.</value>
+  </data>
+  <data name="DrawCompleted" xml:space="preserve">
+    <value>Kura basariyla tamamlandi.</value>
+  </data>
+  <data name="DrawRetrieved" xml:space="preserve">
+    <value>Kura basariyla getirildi.</value>
+  </data>
+  <data name="DrawsRetrieved" xml:space="preserve">
+    <value>Kuralar basariyla getirildi.</value>
+  </data>
 </root>

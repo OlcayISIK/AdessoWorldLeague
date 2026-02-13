@@ -23,13 +23,12 @@ public class DrawController : ControllerBase
     {
         request.FirstName = User.FindFirst(ClaimTypes.GivenName)?.Value ?? string.Empty;
         request.LastName = User.FindFirst(ClaimTypes.Surname)?.Value ?? string.Empty;
-  
 
         var result = await _drawService.PerformDrawAsync(request);
         if (!result.IsSuccess)
-            return BadRequest(new { message = result.ErrorMessage });
+            return BadRequest(new { message = result.Message });
 
-        return Ok(result.Data);
+        return Ok(new { message = result.Message, data = result.Data });
     }
 
     [HttpGet("{id}")]
@@ -37,15 +36,15 @@ public class DrawController : ControllerBase
     {
         var result = await _drawService.GetDrawByIdAsync(id);
         if (!result.IsSuccess)
-            return NotFound(new { message = result.ErrorMessage });
+            return NotFound(new { message = result.Message });
 
-        return Ok(result.Data);
+        return Ok(new { message = result.Message, data = result.Data });
     }
 
     [HttpGet("getAllDraws")]
     public async Task<IActionResult> GetAllDraws()
     {
         var result = await _drawService.GetAllDrawsAsync();
-        return Ok(result.Data);
+        return Ok(new { message = result.Message, data = result.Data });
     }
 }

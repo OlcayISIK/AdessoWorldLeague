@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
 using AdessoWorldLeague.Business.Interfaces;
 using AdessoWorldLeague.Business.Resources;
 using AdessoWorldLeague.Core.Constants;
@@ -14,14 +13,12 @@ public class DrawService : IDrawService
 {
     private readonly IDrawRepository _drawRepository;
     private readonly ITeamRepository _teamRepository;
-    private readonly ILogger<DrawService> _logger;
     private readonly IStringLocalizer<Messages> _localizer;
 
-    public DrawService(IDrawRepository drawRepository, ITeamRepository teamRepository, ILogger<DrawService> logger, IStringLocalizer<Messages> localizer)
+    public DrawService(IDrawRepository drawRepository, ITeamRepository teamRepository, IStringLocalizer<Messages> localizer)
     {
         _drawRepository = drawRepository;
         _teamRepository = teamRepository;
-        _logger = logger;
         _localizer = localizer;
     }
 
@@ -58,10 +55,7 @@ public class DrawService : IDrawService
 
         await _drawRepository.CreateAsync(document);
 
-        _logger.LogInformation("The draw has been completed. Drawn by: {FirstName} {LastName}, Group number: {GroupCount}",
-            request.FirstName, request.LastName, request.GroupCount);
-
-        return OperationResult<DrawResponse>.Success(MapToResponse(document));
+        return OperationResult<DrawResponse>.Success(MapToResponse(document), _localizer["DrawCompleted"]);
     }
 
     public async Task<OperationResult<DrawResponse>> GetDrawByIdAsync(string id)
@@ -70,14 +64,14 @@ public class DrawService : IDrawService
         if (document is null)
             return OperationResult<DrawResponse>.Failure(_localizer["DrawNotFound"]);
 
-        return OperationResult<DrawResponse>.Success(MapToResponse(document));
+        return OperationResult<DrawResponse>.Success(MapToResponse(document), _localizer["DrawRetrieved"]);
     }
 
     public async Task<OperationResult<List<DrawResponse>>> GetAllDrawsAsync()
     {
         var documents = await _drawRepository.GetAllOrderedByDateAsync();
         var responses = documents.Select(MapToResponse).ToList();
-        return OperationResult<List<DrawResponse>>.Success(responses);
+        return OperationResult<List<DrawResponse>>.Success(responses, _localizer["DrawsRetrieved"]);
     }
 
     private static List<DrawGroupResult> ExecuteDraw(int groupCount, List<TeamDocument> allTeams)
