@@ -5,7 +5,6 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using AdessoWorldLeague.Business.Interfaces;
-using AdessoWorldLeague.Business.Resources;
 using AdessoWorldLeague.Business.Settings;
 using AdessoWorldLeague.Core.Results;
 using AdessoWorldLeague.Data.Documents;

@@ -24,7 +24,7 @@ builder.Host.UseSerilog((context, config) =>
         .WriteTo.Seq(context.Configuration["Seq:ServerUrl"] ?? "http://localhost:5341");
 });
 
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddLocalization();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
