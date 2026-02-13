@@ -54,6 +54,12 @@
   <data name="NoTeamsFound" xml:space="preserve">
     <value>No team was found in the database.</value>
   </data>
+  <data name="TeamCountNotDivisible" xml:space="preserve">
+    <value>The number of teams is not evenly divisible by the number of groups.</value>
+  </data>
+  <data name="TooManyTeamsFromSameCountry" xml:space="preserve">
+    <value>A country has more teams than the number of groups, making a fair draw impossible.</value>
+  </data>
   <data name="DrawNotFound" xml:space="preserve">
     <value>The draw was not found.</value>
   </data>

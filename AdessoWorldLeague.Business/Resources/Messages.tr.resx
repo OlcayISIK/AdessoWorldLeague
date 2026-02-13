@@ -54,6 +54,12 @@
   <data name="NoTeamsFound" xml:space="preserve">
     <value>Veritabaninda takim bulunamadi.</value>
   </data>
+  <data name="TeamCountNotDivisible" xml:space="preserve">
+    <value>Takim sayisi grup sayisina esit olarak bolunemiyor.</value>
+  </data>
+  <data name="TooManyTeamsFromSameCountry" xml:space="preserve">
+    <value>Bir ulkenin takim sayisi grup sayisindan fazla, adil bir kura cekilemez.</value>
+  </data>
   <data name="DrawNotFound" xml:space="preserve">
     <value>Kura bulunamadi.</value>
   </data>

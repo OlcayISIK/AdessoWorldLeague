@@ -34,6 +34,13 @@ public class DrawService : IDrawService
         if (allTeams.Count == 0)
             return OperationResult<DrawResponse>.Failure(_localizer["NoTeamsFound"]);
 
+        if (allTeams.Count % request.GroupCount != 0)
+            return OperationResult<DrawResponse>.Failure(_localizer["TeamCountNotDivisible"]);
+
+        var maxTeamsFromSameCountry = allTeams.GroupBy(t => t.Country).Max(g => g.Count());
+        if (maxTeamsFromSameCountry > request.GroupCount)
+            return OperationResult<DrawResponse>.Failure(_localizer["TooManyTeamsFromSameCountry"]);
+
         var groups = ExecuteDraw(request.GroupCount, allTeams);
 
         var document = new DrawDocument
