@@ -1,9 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using AdessoWorldLeague.Business.Interfaces;
+using AdessoWorldLeague.Business.Resources;
 using AdessoWorldLeague.Business.Settings;
 using AdessoWorldLeague.Core.Results;
 using AdessoWorldLeague.Data.Documents;
@@ -16,18 +18,20 @@ public class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly JwtSettings _jwtSettings;
+    private readonly IStringLocalizer<Messages> _localizer;
 
-    public AuthService(IUserRepository userRepository, IOptions<JwtSettings> jwtSettings)
+    public AuthService(IUserRepository userRepository, IOptions<JwtSettings> jwtSettings, IStringLocalizer<Messages> localizer)
     {
         _userRepository = userRepository;
         _jwtSettings = jwtSettings.Value;
+        _localizer = localizer;
     }
 
     public async Task<OperationResult> RegisterAsync(RegisterRequest request)
     {
         var existing = await _userRepository.GetByEmailAsync(request.Email);
         if (existing is not null)
-            return OperationResult.Failure("This email address is already registered.");
+            return OperationResult.Failure(_localizer["EmailAlreadyRegistered"]);
 
         var user = new UserDocument
         {
@@ -46,10 +50,10 @@ public class AuthService : IAuthService
     {
         var user = await _userRepository.GetByEmailAsync(request.Email);
         if (user is null)
-            return OperationResult<LoginResponse>.Failure("Email or password is incorrect.");
+            return OperationResult<LoginResponse>.Failure(_localizer["InvalidCredentials"]);
 
         if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
-            return OperationResult<LoginResponse>.Failure("Email or password is incorrect.");
+            return OperationResult<LoginResponse>.Failure(_localizer["InvalidCredentials"]);
 
         var token = GenerateToken(user);
         var expiration = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpirationMinutes);
